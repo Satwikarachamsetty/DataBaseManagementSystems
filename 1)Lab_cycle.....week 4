@@ -1,0 +1,30 @@
+3)========================================
+Nested Queries----------------------------------------------------------------
+____________________________________________________________________________________________________________________
+2)
+SQL> select name from instructor  where salary > (select salary from instructor where lower(dept_nam
+e)='biology');
+
+NAME
+--------------------
+Wu
+Einstein
+Gold
+Katz
+Singh
+Brandt
+Kim
+
+7 rows selected.
+_____________________________________________________________________________________________________________________
+3)
+SQL>  select dept_name
+  2   from instructor
+  3   group by dept_name
+  4   having avg(salary)>=all(select avg(salary) from instructor group by dept_name);
+
+DEPT_NAME
+--------------------
+Physics
+_________________________________________________________________________________________________________________________________________
+4)
