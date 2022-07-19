@@ -140,7 +140,94 @@ SQL> select * from emp where to_char(hiredate,'yy')>=80 and  to_char(hiredate,'y
       7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
       7788 SCOTT      ANALYST         7566 09-DEC-82       3200                    20
       7876 ADAMS      CLERK           7788 12-JAN-83       1100                    20
-      ____________________________________________________________________________________
+____________________________________________________________________________________
+8)
+SQL> select ename,round((sysdate-hiredate)/365) from emp;
+
+ENAME      ROUND((SYSDATE-HIREDATE)/365)
+---------- -----------------------------
+KING                                  41
+BLAKE                                 41
+CLARK                                 41
+JONES                                 41
+MARTIN                                41
+ALLEN                                 41
+TURNER                                41
+JAMES                                 41
+WARD                                  41
+FORD                                  41
+SMITH                                 42
+SCOTT                                 40
+ADAMS                                 40
+MILLER                                41
+
+14 rows selected.
+___________________________________________________________________________________________________
+9)
+SQL> select ename,sal ,
+  2  case
+  3  when sal>1500 then 'Above Target'
+  4  when sal=1500 then 'On the Target'
+  5  when sal<1500 then 'Below the Targert'
+  6  end as sal_comment
+  7  from emp;
+
+ENAME             SAL SAL_COMMENT
+---------- ---------- -----------------
+KING             5000 Above Target
+BLAKE            2850 Above Target
+CLARK            2450 Above Target
+JONES            2975 Above Target
+MARTIN           1250 Below the Targert
+ALLEN            1600 Above Target
+TURNER           1500 On the Target
+JAMES             950 Below the Targert
+WARD             1250 Below the Targert
+FORD             3000 Above Target
+SMITH             800 Below the Targert
+SCOTT            3200 Above Target
+ADAMS            1100 Below the Targert
+MILLER           1300 Below the Targert
+
+14 rows selected.
+_______________________________________________________________________________________________
+10)
+SQL> select e.empno,e.ename,d.dname,
+  2  case
+  3  when sal>=700 and sal<=1200 then '1'
+  4  when sal>=1201 and sal<=1400 then '2'
+  5  when sal>=1401 and sal<=2000 then '3'
+  6  when sal>=2001 and sal<=3000 then '4'
+  7  when sal>=3001 and sal<=9999 then '5'
+  8  end as grade
+  9  from emp e,dept d
+ 10  where e.deptno=d.deptno and d.deptno=30;
+
+     EMPNO ENAME      DNAME          G
+---------- ---------- -------------- -
+      7698 BLAKE      SALES          4
+      7654 MARTIN     SALES          2
+      7499 ALLEN      SALES          3
+      7844 TURNER     SALES          3
+      7900 JAMES      SALES          1
+      7521 WARD       SALES          2
+
+6 rows selected.
+____________________________________________________________________________________________________
+12)
+SQL> select e.ename,e.sal,e.deptno from emp e where sal> (select avg(sal) from emp where e.deptno=de
+ptno) order by deptno;
+
+ENAME             SAL     DEPTNO
+---------- ---------- ----------
+KING             5000         10
+JONES            2975         20
+FORD             3000         20
+SCOTT            3200         20
+BLAKE            2850         30
+ALLEN            1600         30
+
+6 rows selected.
 
 
 
