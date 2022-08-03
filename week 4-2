@@ -1,0 +1,27 @@
+2)=====================================================================================================================
+
+1)-----------------------------------------------------------------------
+
+SQL> select count(distinct id) from (select ta.id from takes ta,teaches te,course c where te.id=1101
+1 and c.course_id=te.course_id and ta.course_id=te.course_id);
+
+COUNT(DISTINCTID)
+-----------------
+                0
+2)------------------------------------------------------------------------
+
+SQL> select name from (select i1.name from instructor i1,instructor i2 where i1.salary>i2.salary and
+ i2.dept_name='Biology');
+
+NAME
+--------------------
+Wu
+Einstein
+Gold
+Katz
+Singh
+Brandt
+Kim
+
+7 rows selected.
+3)--------------------------------------------------------------------------
