@@ -24,4 +24,116 @@ Brandt
 Kim
 
 7 rows selected.
-3)--------------------------------------------------------------------------
+3)----------------------------------------------------------------------------------------------------------------------------------
+SQL>  select dept_name
+  2   from instructor
+  3   group by dept_name
+  4   having avg(salary)>=all(select avg(salary) from instructor group by dept_name);
+
+DEPT_NAME
+--------------------
+Physics
+_________________________________________________________________________________________________________________________________________
+
+4. Find all the courses taught in the both the Fall 2009 and Spring 2010
+semesters
+
+SQL>  select distinct course_id from teaches where semester='Fall' and year='2009' and course_id in 
+(select distinct course_id from teaches where semester='Spring' and year='2010');
+
+COURSE_I
+--------
+CS-101
+
+_______________________________________________________________________________________________________________________________________
+
+5. Find all the courses taught in the Fall 2009 semester but not in the Spring
+2010 semester.
+
+SQL> select distinct course_id from teaches where semester='Fall' and year='2009' and course_id not 
+in (select distinct course_id from teaches where semester='Spring' and year='2010');
+
+COURSE_I
+--------
+CS-347
+PHY-101
+
+___________________________________________________________________________________________________________________________________
+
+6. Find all courses taught in both the Fall 2009 semester and in the Spring
+2010 semester. (Write correlated nested Query)
+
+SQL> select distinct course_id from teaches t  where semester='Fall' and year='2009' and exists
+(select distinct course_id from teaches r where semester='Spring' and year='2010' and t.course_id=r.course_id);
+
+COURSE_I
+--------
+CS-101
+___________________________________________________________________________________________________________________________________
+7. Find all students who have taken all courses offered in the Biology
+department. (Write Correlated nested Query)
+
+
+__________________________________________________________________________________________________________________________________
+8. Find all courses that were offered at most once in 2009.
+
+
+SQL> select course_id,count(course_id) from section where year=2009 and  course_id in (select course_id from sectio
+n where year=2009) group by course_id having count(course_id)<=1;
+
+COURSE_I COUNT(COURSE_ID)
+-------- ----------------
+BIO-101                 1
+CS-101                  1
+CS-347                  1
+EE-181                  1
+PHY-101                 1
+
+_________________________________________________________________________________________________________________________________
+9. Find all courses that were offered at least twice in 2009”
+
+
+SQL> select course_id from section where year=2009 and  course_id in (select course_id from section 
+where year=2009) group by course_id having count(course_id)>=2;
+
+COURSE_I
+--------
+CS-190
+
+
+__________________________________________________________________________________________________________________________________
+10. Find the average instructors’ salaries of those departments where the
+average salary is greater than $42,000.
+
+
+__________________________________________________________________________________________________________________________________
+11. Find the departments with the maximum budget.
+
+_________________________________________________________________________________________________________________________________
+12. Find the names of instructors who have not taught any course.
+
+_______________________________________________________________________________________________________________________________
+13. Find the IDs and names of all students who have not taken any course
+offering before Spring 2009.
+
+_________________________________________________________________________________________________________________________________
+14. Find the lowest, across all departments, of the per-department maximum
+salary computed.
+
+______________________________________________________________________________________________________________________________________
+15. Display the IDs and names of the instructors who have taught all Comp. Sci.
+courses.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
